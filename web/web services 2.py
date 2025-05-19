@@ -13,6 +13,11 @@
       padding: 0;
       color: #000;
       background-color: #ffffff;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    body.dark-mode {
+      background-color: #121212;
+      color: #f5f5f5;
     }
     header, section, footer {
       padding: 60px 30px;
@@ -25,6 +30,9 @@
       flex-wrap: wrap;
       color: white;
     }
+    body.dark-mode header {
+      background-color: #1f1f1f;
+    }
     header h1 {
       font-size: 3rem;
       color: orange;
@@ -33,6 +41,9 @@
       max-width: 600px;
       font-size: 1.2rem;
       color: white;
+    }
+    body.dark-mode .intro p {
+      color: #ddd;
     }
     .profile-pic {
       width: 180px;
@@ -50,6 +61,9 @@
     .recent-works {
       background: rgba(255, 255, 255, 0.9);
     }
+    body.dark-mode .recent-works {
+      background: rgba(40, 40, 40, 0.9);
+    }
     .section-title {
       font-size: 2rem;
       color: orange;
@@ -61,8 +75,16 @@
       background-color: black;
       color: orange;
     }
+    body.dark-mode .about-me {
+      background-color: #1f1f1f;
+      color: orange;
+    }
     .contact {
       background-color: white;
+      color: orange;
+    }
+    body.dark-mode .contact {
+      background-color: #1f1f1f;
       color: orange;
     }
     .contact-form input, .contact-form textarea {
@@ -74,9 +96,19 @@
       color: orange;
       border-radius: 8px;
     }
+    body.dark-mode .contact-form input,
+    body.dark-mode .contact-form textarea {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid #555;
+      color: #f5f5f5;
+    }
     .contact-form input::placeholder,
     .contact-form textarea::placeholder {
       color: #999;
+    }
+    body.dark-mode .contact-form input::placeholder,
+    body.dark-mode .contact-form textarea::placeholder {
+      color: #aaa;
     }
     .btn {
       background: orange;
@@ -104,6 +136,9 @@
     .contact-links a:hover {
       color: black;
     }
+    body.dark-mode .contact-links a:hover {
+      color: white;
+    }
     .tag {
       display: inline-block;
       background: #ffe0b2;
@@ -112,6 +147,9 @@
       margin-right: 5px;
       font-size: 0.75rem;
       border-radius: 4px;
+    }
+    body.dark-mode .tag {
+      background: #333;
     }
     .project-card img {
       width: 100%;
@@ -148,6 +186,8 @@
     </div>
   </header>
 
+  <button onclick="toggleDarkMode()" class="btn m-3">Toggle Dark Mode</button>
+
   <section class="recent-works">
     <h2 class="section-title">My Recent Works</h2>
     <div class="carousel">
@@ -160,7 +200,6 @@
             <div><span class="tag">HTML</span><span class="tag">Bootstrap</span><span class="tag">Ruby</span></div>
           </div>
         </div>
-
         <div class="card project-card" style="min-width: 300px;">
           <img src="https://via.placeholder.com/300x200?text=Game+2" alt="Soccer Quote 2">
           <div class="overlay">
@@ -169,7 +208,6 @@
             <div><span class="tag">HTML</span><span class="tag">Bootstrap</span><span class="tag">Ruby</span></div>
           </div>
         </div>
-
         <div class="card project-card" style="min-width: 300px;">
           <img src="https://via.placeholder.com/300x200?text=Game+3" alt="Soccer Quote 3">
           <div class="overlay">
@@ -195,16 +233,15 @@
   <section class="contact">
     <h2 class="section-title">Get In Touch</h2>
     <p>I'm always interested in hearing about new projects. Drop a message below!</p>
-
     <div class="contact-links">
       <a href="mailto:abel.mulu@bitscollege.edu.et"><i class="fas fa-envelope"></i> abel.mulu@bitscollege.ed.et</a>
       <a href="https://www.instagram.com/abel_m07" target="_blank"><i class="fab fa-instagram"></i> @abel_m07</a>
     </div>
-
-    <form class="contact-form">
-      <input type="text" name="name" placeholder="First Name">
-      <input type="text" name="lastname" placeholder="Last Name">
-      <textarea name="message" placeholder="Share your thoughts..."></textarea>
+    <form class="contact-form" id="contactForm">
+      <input type="text" name="name" id="name" placeholder="First Name">
+      <input type="text" name="lastname" id="lastname" placeholder="Last Name">
+      <input type="email" name="email" id="email" placeholder="Email">
+      <textarea name="message" id="message" placeholder="Share your thoughts..."></textarea>
       <button type="submit" class="btn">Send Message</button>
     </form>
   </section>
@@ -212,5 +249,33 @@
   <footer>
     <p>&copy; 2025 Abel. All rights reserved.</p>
   </footer>
+
+  <script>
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+    }
+
+    document.getElementById('contactForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const message = document.getElementById('message').value.trim();
+
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (!name || !email || !message) {
+        alert('Please fill in all fields.');
+        return;
+      }
+
+      if (!emailPattern.test(email)) {
+        alert('Please enter a valid email address.');
+        return;
+      }
+
+      alert(`Thank you, ${name}, for reaching out!`);
+      this.reset();
+    });
+  </script>
 </body>
 </html>
